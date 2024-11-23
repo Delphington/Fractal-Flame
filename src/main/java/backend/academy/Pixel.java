@@ -1,3 +1,12 @@
 package backend.academy;
 
-public record Pixel(int r, int g, int b, int hitCount) { }
+import lombok.Getter;
+
+@Getter
+public class Pixel{
+    int r =  10;
+    int g =60;
+    int b =10;
+    int hitCount;
+    public Pixel(){};
+}

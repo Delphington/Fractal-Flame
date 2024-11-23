@@ -1,4 +1,4 @@
 package backend.academy;
 
-public record Point() {
+public record Point(double x, double y) {
 }
