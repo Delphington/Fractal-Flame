@@ -1,9 +1,17 @@
 package backend.academy.input;
 
 import backend.academy.Space;
+import backend.academy.transformation.DiamondTransformation;
+import backend.academy.transformation.DiscTransformation;
 import backend.academy.transformation.EyefishTransformation;
+import backend.academy.transformation.HandkerchiefTransformation;
+import backend.academy.transformation.HorseshoeTransformation;
+import backend.academy.transformation.HyperbolicTransformation;
+import backend.academy.transformation.LinearTransformation;
+import backend.academy.transformation.PolarTransformation;
 import backend.academy.transformation.SinTransformation;
-import backend.academy.transformation.SwirlTransformation;
+import backend.academy.transformation.SphericalTransformation;
+import backend.academy.transformation.SpiralTransformation;
 import backend.academy.transformation.Transformation;
 import lombok.Getter;
 import java.io.PrintStream;
@@ -24,11 +32,20 @@ public class InputSimpleParam {
         spaces.add(new Space());
         spaces.add(new Space());
         spaces.add(new Space());
+
         //---------------------
         transformations = new ArrayList<>();
-        transformations.add(new SinTransformation());
-        transformations.add(new SwirlTransformation());
+        transformations.add(new DiamondTransformation());
+        transformations.add(new DiscTransformation());
         transformations.add(new EyefishTransformation());
+        transformations.add(new HandkerchiefTransformation());
+        transformations.add(new HorseshoeTransformation());
+        transformations.add(new HyperbolicTransformation());
+        transformations.add(new LinearTransformation());
+        transformations.add(new PolarTransformation());
+        transformations.add(new SinTransformation());
+        transformations.add(new SphericalTransformation());
+        transformations.add(new SpiralTransformation());
     }
 
     @Getter
