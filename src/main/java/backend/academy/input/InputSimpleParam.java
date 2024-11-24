@@ -1,28 +1,48 @@
 package backend.academy.input;
 
+import backend.academy.Space;
+import backend.academy.transformation.EyefishTransformation;
+import backend.academy.transformation.SinTransformation;
+import backend.academy.transformation.SwirlTransformation;
+import backend.academy.transformation.Transformation;
 import lombok.Getter;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class SrvInput {
+public class InputSimpleParam {
     private PrintStream printStream = System.out;
     private Scanner scan = new Scanner(System.in);
 
-    @Getter
-    private int height = 1080;
-    @Getter
-    private int weight = 1920;
-    @Getter
-    private int sampleCount = 2000;
-    @Getter
-    private int iterationCount = 2000;
-    @Getter
-    private int symmetryCount = 20;
-    @Getter
-    private int threadCount = 6;
+    public InputSimpleParam() {
+        //Заполнение аффинными пространственнами
+        spaces = new ArrayList<>();
+        spaces.add(new Space());
+        spaces.add(new Space());
+        spaces.add(new Space());
+        spaces.add(new Space());
+        spaces.add(new Space());
+        spaces.add(new Space());
+        //---------------------
+        transformations = new ArrayList<>();
+        transformations.add(new SinTransformation());
+        transformations.add(new SwirlTransformation());
+        transformations.add(new EyefishTransformation());
+    }
 
+    @Getter
+    private List<Space> spaces;
+    @Getter
+    List<Transformation> transformations;
 
-
+    @Getter private int height = 1080;
+    @Getter private int weight = 1920;
+    @Getter private int sampleCount = 2000;
+    @Getter private int iterationCount = 2000;
+    @Getter private int symmetryCount = 20;
+    @Getter private int threadCount = 6;
+    @Getter private static int numberTransformation;
 
     private boolean isValid(Integer x) {
         return (x > 0) && x < 10000;
