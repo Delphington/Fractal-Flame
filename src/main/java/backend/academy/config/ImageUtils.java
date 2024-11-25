@@ -14,7 +14,6 @@ public final class ImageUtils {
         int width = image.width();
         int height = image.height();
 
-        // Создание изображения
         BufferedImage images = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         // Заполнение изображения данными из массива RGB
@@ -25,8 +24,7 @@ public final class ImageUtils {
             }
         }
 
-        //todo: получше переписать и  добавить логгирование
-        // Сохранение изображения в файл
+        //todo: получше переписать и  добавить логгирование // Сохранение изображения в файл
         try {
             File outputFile = new File(filename + "." + format.format());
             ImageIO.write(images, format.format(), outputFile);
@@ -34,12 +32,5 @@ public final class ImageUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        FractalImage image = FractalImage.create(1024, 1024);
-        Path file = Path.of("src/main/resources/output");
-        ImageUtils imageUtils = new ImageUtils();
-        imageUtils.save(image, file, ImageFormat.PNG);
     }
 }

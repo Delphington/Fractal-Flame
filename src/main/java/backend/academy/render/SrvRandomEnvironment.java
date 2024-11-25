@@ -4,8 +4,8 @@ import backend.academy.Point;
 import backend.academy.Space;
 import backend.academy.SrcRandom;
 import backend.academy.transformation.Transformation;
-import lombok.Getter;
 import java.util.List;
+import lombok.Getter;
 
 class SrvRandomEnvironment {
     private List<Space> spaces;
@@ -24,14 +24,12 @@ class SrvRandomEnvironment {
     public Point generateResource(Point point) {
         //Рандомное аффиное пространство
         Space termSpace = spaces.get(SrcRandom.getRandomInt(0, spaces.size()));
+        //тут создавал transformation и к нему применял
 
-
-        //тут создавал transpoint и к нему применял
         point = termSpace.apply(point);
-
         point = transformation.apply(point); //преобразование
         randomSpace = termSpace;
         randomPoint = point;
-        return  point;
+        return point;
     }
 }

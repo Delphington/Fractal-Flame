@@ -28,8 +28,6 @@ public class GammaCorrection {
                 Pixel pixel = image.pixel(x, y);
                 if (pixel.hitCount() != 0) {
                     double normal = log10(pixel.hitCount()) / max;
-
-
                     image.data()[y][x] = new Pixel(
                         (int) (pixel.r() * pow(normal, (1.0 / GAMMA))),
                         (int) (pixel.g() * pow(normal, (1.0 / GAMMA))),
