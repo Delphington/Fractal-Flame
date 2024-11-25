@@ -1,7 +1,17 @@
 package backend.academy;
 
+import lombok.Getter;
+import lombok.ToString;
+import org.checkerframework.checker.units.qual.C;
+import java.awt.Color;
 import java.util.Random;
+//import static backend.academy.render.HabrRendererSingleThreaded.randomDouble;
 
+//todo: запросить количество аффиных пространтсв
+
+
+@Getter
+@ToString
 public class Space {
     /**
      * x(n+1)     (a, b)  (xn)     (c)
@@ -17,15 +27,21 @@ public class Space {
     private int green;
     private int blue;
 
-    private double a = 0.1;
+    private double a;
     private double b;
-    private double d = 0.1;
+    private double d;
     private double e;
 
     private double c;
     private double f;
+    @Getter
+    static private Color color;
+    // Константы для генерации случайных цветов и ограничений для значений
+    private static final Integer COUNT_OF_COLORS = 256; // Количество возможных цветов (0-255)
+    private static final Integer MIN_VALUE = -1; // Минимальное значение для случайных чисел
+    private static final Integer MAX_VALUE = 1; // Максимальное значение для случайных чисел
 
-    Space() {
+    public Space() {
         generateRandom();
     }
 
@@ -37,28 +53,12 @@ public class Space {
                 < 1 + Math.pow((a * e - b * d), 2));
     }
 
-    @Override public String toString() {
-        return "Space{" +
-            "MAX_COLOR=" + MAX_COLOR +
-            ", MIN_NUMBER=" + MIN_NUMBER +
-            ", MAX_NUMBER=" + MAX_NUMBER +
-            ", red=" + red +
-            ", green=" + green +
-            ", blue=" + blue +
-            ", a=" + a +
-            ", b=" + b +
-            ", d=" + d +
-            ", e=" + e +
-            ", c=" + c +
-            ", f=" + f +
-            '}';
-    }
-
     private void generateRandom() {
         red = (int) (Math.random() * MAX_COLOR);
         green = (int) (Math.random() * MAX_COLOR);
         blue = (int) (Math.random() * MAX_COLOR);
         Random random = new Random();
+        color = new Color(red, green,blue);
 
         // Генерация случайного числа в диапазоне от -1.5 до 1.5
         double min = -1.5;
@@ -67,21 +67,18 @@ public class Space {
         do {
             a = min + (max - min) * random.nextDouble();
             b = min + (max - min) * random.nextDouble();
-
             d = min + (max - min) * random.nextDouble();
-
             e = min + (max - min) * random.nextDouble();
-
             c = min + (max - min) * random.nextDouble();
             f = min + (max - min) * random.nextDouble();
 
         } while (!checkConditional());
     }
 
-    public static void main(String[] args) {
-        Space space = new Space();
-        System.out.println(space);
-
+    // Метод для применения аффинного преобразования к точке
+    public Point apply(Point point) {
+        return new Point(a * point.x() + b * point.y() + c, d * point.x() + e * point.y() + f);
     }
+
 
 }

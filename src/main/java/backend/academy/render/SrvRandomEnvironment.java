@@ -1,6 +1,5 @@
 package backend.academy.render;
 
-import backend.academy.Constance;
 import backend.academy.Point;
 import backend.academy.Space;
 import backend.academy.SrcRandom;
@@ -8,7 +7,7 @@ import backend.academy.transformation.Transformation;
 import lombok.Getter;
 import java.util.List;
 
-class SrvRandomEnvironment implements Constance {
+class SrvRandomEnvironment {
     private List<Space> spaces;
     private List<Transformation> transformations;
 
@@ -22,12 +21,19 @@ class SrvRandomEnvironment implements Constance {
         this.transformations = transformations;
     }
 
-    public void generateResource(){
+    public Point generateResource(Point point) {
+        //Рандомное аффиное пространство
         Space termSpace = spaces.get(SrcRandom.getRandomInt(0, spaces.size()));
-        Transformation transformationFunction = transformations.get(SrcRandom.getRandomInt(0, transformations.size()));
-        Point point = termSpace.apply(SrcRandom.getRandomPoint(X_MIN, X_MAX, Y_MIN, Y_MAX));
 
-        randomPoint = transformationFunction.apply(point); //преобразование
-        randomSpace  = termSpace;
+        //Рандомноая трансформация
+//        Transformation transformationFunction = transformations.get(SrcRandom.getRandomInt(0, transformations.size()));
+        Transformation transformationFunction = transformations.get(2);
+
+        point = termSpace.apply(point);
+
+        point = transformationFunction.apply(point); //преобразование
+        randomSpace = termSpace;
+        randomPoint = point;
+        return  point;
     }
 }

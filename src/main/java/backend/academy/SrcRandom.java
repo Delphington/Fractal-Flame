@@ -1,7 +1,9 @@
 package backend.academy;
 
+import backend.academy.render.Rect;
 import lombok.experimental.UtilityClass;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @UtilityClass
 public class SrcRandom {
@@ -23,5 +25,11 @@ public class SrcRandom {
         return new Point(getRandomDouble(x1,x2), getRandomDouble(y1,y2));
     }
 
+    public static Point random(Rect rect) {
+        return new Point(
+            ThreadLocalRandom.current().nextDouble(rect.x(), rect.x() + rect.width()),
+            ThreadLocalRandom.current().nextDouble(rect.y(), rect.y() + rect.height())
+        );
+    }
 
 }

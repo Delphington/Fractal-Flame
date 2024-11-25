@@ -5,6 +5,7 @@ import backend.academy.config.ImageUtils;
 import backend.academy.input.InputSimpleParam;
 import backend.academy.post.GammaCorrection;
 import backend.academy.render.RenderSingleThread;
+import backend.academy.render.Rect;
 import backend.academy.transformation.Transformation;
 import lombok.experimental.UtilityClass;
 import java.io.IOException;
@@ -26,14 +27,17 @@ public class StartProgram {
         List<Space> spaces = srvInput.spaces();
         RenderSingleThread render = new RenderSingleThread();
 
-        // Рендеринг фрактального изображения с заданными параметрами
+        Rect rect = new Rect(-3, -2, 6, 6);
+
+            // Рендеринг фрактального изображения с заданными параметрами
         render.rend(
             fractalImage,
             spaces,
             transformations1,
             srvInput.sampleCount(),
             srvInput.iterationCount(),
-            srvInput.symmetryCount()
+            srvInput.symmetryCount(),
+            rect
         );
 
         GammaCorrection.gammaCorrection(fractalImage);

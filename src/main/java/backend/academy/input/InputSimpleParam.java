@@ -22,22 +22,21 @@ import java.util.Scanner;
 public class InputSimpleParam {
     private PrintStream printStream = System.out;
     private Scanner scan = new Scanner(System.in);
+    private int count = 1;
+    //Todo; ввод типа трансформации
 
     public InputSimpleParam() {
         //Заполнение аффинными пространственнами
         spaces = new ArrayList<>();
-        spaces.add(new Space());
-        spaces.add(new Space());
-        spaces.add(new Space());
-        spaces.add(new Space());
-        spaces.add(new Space());
-        spaces.add(new Space());
 
         //---------------------
         transformations = new ArrayList<>();
+
+        transformations.add(new EyefishTransformation());
+
         transformations.add(new DiamondTransformation());
         transformations.add(new DiscTransformation());
-        transformations.add(new EyefishTransformation());
+
         transformations.add(new HandkerchiefTransformation());
         transformations.add(new HorseshoeTransformation());
         transformations.add(new HyperbolicTransformation());
@@ -48,6 +47,12 @@ public class InputSimpleParam {
         transformations.add(new SpiralTransformation());
     }
 
+    private void createAffineSpace() {
+        for (int i = 0; i < spaceCount; i++) {
+            spaces.add(new Space());
+        }
+    }
+
     @Getter
     private List<Space> spaces;
     @Getter
@@ -56,9 +61,13 @@ public class InputSimpleParam {
     @Getter private int height = 1080;
     @Getter private int weight = 1920;
     @Getter private int sampleCount = 2000;
-    @Getter private int iterationCount = 2000;
-    @Getter private int symmetryCount = 20;
+    @Getter private int iterationCount = 1000;
+
+    @Getter private int spaceCount = 40;
+
+    @Getter private int symmetryCount = 4;
     @Getter private int threadCount = 6;
+
     @Getter private static int numberTransformation;
 
     private boolean isValid(Integer x) {
@@ -68,6 +77,7 @@ public class InputSimpleParam {
     private int inputParseString(String inputText, String input) {
         while (true) {
             try {
+                //todo: закиливание если слишком много ввели
                 int num = Integer.parseInt(input);
                 if (isValid(num)) {
                     return num;
@@ -90,11 +100,13 @@ public class InputSimpleParam {
     }
 
     public void input() {
-        height = inputValue("Введите высоту картинки: ", height);
-        weight = inputValue("Введите ширину картинки: ", weight);
-        sampleCount = inputValue("Введите количество выборок для рендеринга: ", sampleCount);
-        iterationCount = inputValue("Введите количество итераций для выборки: ", iterationCount);
-        symmetryCount = inputValue("Введите количество симметрий: ", symmetryCount);
-        threadCount = inputValue("Введите количество потоков: ", threadCount);
+        height = inputValue("[" + count++ + "] Введите высоту картинки: ", height);
+        weight = inputValue("[" + count++ + "] Введите ширину картинки: ", weight);
+        sampleCount = inputValue("[" + count++ + "] Введите количество выборок для рендеринга: ", sampleCount);
+        iterationCount = inputValue("[" + count++ + "] Введите количество итераций для выборки: ", iterationCount);
+        spaceCount = inputValue("[" + count++ + "] Введите количество аффинных пространств: ", spaceCount);
+        createAffineSpace();
+        symmetryCount = inputValue("[" + count++ + "] Введите количество симметрий: ", symmetryCount);
+        threadCount = inputValue("[" + count++ + "] Введите количество потоков: ", threadCount);
     }
 }
