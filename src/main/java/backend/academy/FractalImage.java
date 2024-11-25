@@ -9,10 +9,9 @@ public record FractalImage(Pixel[][] data, int width, int height) {
                 table[i][j] = new Pixel();
             }
         }
-
         return new FractalImage(table, width, height);
     }
-//    boolean contains(int x, int y) {return true;}
+
     public Pixel pixel(int x, int y) {
         return data[y][x];
     }
@@ -20,11 +19,5 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     public boolean isInImage(Point point) {
         return point.x() >= 0 && point.x() < width && point.y() >= 0 &&
             point.y() < height; // Проверяем, что координаты точки находятся в пределах ширины и высоты изображения
-    }
-
-
-    // Перегруженный метод для получения пикселя по объекту Point
-    public Pixel pixel(Point point) {
-        return data[(int) point.y()][(int) point.x()]; // Преобразуем координаты точки в целые числа и возвращаем соответствующий пиксель
     }
 }

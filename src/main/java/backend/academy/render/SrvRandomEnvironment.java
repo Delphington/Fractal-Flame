@@ -9,29 +9,27 @@ import java.util.List;
 
 class SrvRandomEnvironment {
     private List<Space> spaces;
-    private Transformation transformations;
+    private Transformation transformation;
 
     @Getter
     private Space randomSpace;
     @Getter
     private Point randomPoint;
 
-    public SrvRandomEnvironment(List<Space> spaces, Transformation transformations) {
+    public SrvRandomEnvironment(List<Space> spaces, Transformation transformation) {
         this.spaces = spaces;
-        this.transformations = transformations;
+        this.transformation = transformation;
     }
 
     public Point generateResource(Point point) {
         //Рандомное аффиное пространство
         Space termSpace = spaces.get(SrcRandom.getRandomInt(0, spaces.size()));
 
-        //Рандомноая трансформация
-//        Transformation transformationFunction = transformations.get(SrcRandom.getRandomInt(0, transformations.size()));
-        Transformation transformationFunction = transformations;
 
+        //тут создавал transpoint и к нему применял
         point = termSpace.apply(point);
 
-        point = transformationFunction.apply(point); //преобразование
+        point = transformation.apply(point); //преобразование
         randomSpace = termSpace;
         randomPoint = point;
         return  point;

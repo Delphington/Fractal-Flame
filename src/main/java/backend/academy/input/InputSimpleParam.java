@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Scanner;
 import lombok.Getter;
 
+//todo: не все работают
+
 public class InputSimpleParam implements Constance {
     private final PrintStream printStream = System.out;
     private final Scanner scan = new Scanner(System.in);
@@ -32,7 +34,7 @@ public class InputSimpleParam implements Constance {
     @Getter private Map<String, Transformation> variousTransformation;
     @Getter private List<Space> spaces;
     //Дефолтное заполение переменных
-    @Getter private String typeTransformation = "disc";
+    @Getter private String typeTransformation = "spiral";
     @Getter private int height = 1080;
     @Getter private int weight = 1920;
     @Getter private int sampleCount = 2000;

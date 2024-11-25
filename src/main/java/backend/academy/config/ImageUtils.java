@@ -21,9 +21,7 @@ public final class ImageUtils {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 images.setRGB(x, y,
-                    new Color(image.pixel(x, y).r(),
-                        image.pixel(x, y).g(),
-                        image.pixel(x, y).b()).getRGB());
+                    new Color(image.pixel(x, y).r(), image.pixel(x, y).g(), image.pixel(x, y).b()).getRGB());
             }
         }
 
