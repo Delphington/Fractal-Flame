@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 //todo: Логирование
+//todo: вывод заполненных данных
 
 @UtilityClass
 public class StartProgram {
@@ -22,7 +23,7 @@ public class StartProgram {
         srvInput.input();
 
         FractalImage fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
-        Transformation transformations1 = srvInput.variousTransformation().get("Diamond");
+        Transformation transformations1 = srvInput.variousTransformation().get(srvInput.typeTransformation());
         List<Space> spaces = srvInput.spaces();
         RenderSingleThread render = new RenderSingleThread();
 

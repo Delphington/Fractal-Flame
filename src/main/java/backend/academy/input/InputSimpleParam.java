@@ -1,6 +1,8 @@
 package backend.academy.input;
 
+import backend.academy.Constance;
 import backend.academy.Space;
+import backend.academy.config.ImageFormat;
 import backend.academy.transformation.DiamondTransformation;
 import backend.academy.transformation.DiscTransformation;
 import backend.academy.transformation.EyefishTransformation;
@@ -13,47 +15,46 @@ import backend.academy.transformation.SinTransformation;
 import backend.academy.transformation.SphericalTransformation;
 import backend.academy.transformation.SpiralTransformation;
 import backend.academy.transformation.Transformation;
-import lombok.Getter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import lombok.Getter;
 
-public class InputSimpleParam {
-    private PrintStream printStream = System.out;
-    private Scanner scan = new Scanner(System.in);
+public class InputSimpleParam implements Constance {
+    private final PrintStream printStream = System.out;
+    private final Scanner scan = new Scanner(System.in);
     private int count = 1;
-    private static int counterTransformation = 0;
 
-    //Todo; ввод типа трансформации
+    @Getter private Map<String, Transformation> variousTransformation;
+    @Getter private List<Space> spaces;
+    //Дефолтное заполение переменных
+    @Getter private String typeTransformation = "disc";
+    @Getter private int height = 1080;
+    @Getter private int weight = 1920;
+    @Getter private int sampleCount = 2000;
+    @Getter private int iterationCount = 1000;
+    @Getter private int spaceCount = 40;
+    @Getter private int symmetryCount = 4;
+    @Getter private int threadCount = 6;
+    @Getter private String typeImageFormat = "png";
 
     public InputSimpleParam() {
-        //Заполнение аффинными пространственнами
         spaces = new ArrayList<>();
         variousTransformation = new HashMap<>();
-        initializationTransformation();
-    }
-
-    private void createAffineSpace() {
-        for (int i = 0; i < spaceCount; i++) {
-            spaces.add(new Space());
-        }
-    }
-
-    private void initializationTransformation() {
-        variousTransformation.put("Eyefish", new EyefishTransformation());
-        variousTransformation.put("Diamond", new DiamondTransformation());
-        variousTransformation.put("Disc", new DiscTransformation());
-        variousTransformation.put("Handkerchief", new HandkerchiefTransformation());
-        variousTransformation.put("Horseshoe", new HorseshoeTransformation());
-        variousTransformation.put("Hyperbolic", new HyperbolicTransformation());
-        variousTransformation.put("Linear", new LinearTransformation());
-        variousTransformation.put("Polar", new PolarTransformation());
-        variousTransformation.put("Sin", new SinTransformation());
-        variousTransformation.put("Spherical", new SphericalTransformation());
-        variousTransformation.put("Spiral", new SpiralTransformation());
+        variousTransformation.put("eyefish", new EyefishTransformation());
+        variousTransformation.put("diamond", new DiamondTransformation());
+        variousTransformation.put("disc", new DiscTransformation());
+        variousTransformation.put("handkerchief", new HandkerchiefTransformation());
+        variousTransformation.put("horseshoe", new HorseshoeTransformation());
+        variousTransformation.put("hyperbolic", new HyperbolicTransformation());
+        variousTransformation.put("linear", new LinearTransformation());
+        variousTransformation.put("polar", new PolarTransformation());
+        variousTransformation.put("sin", new SinTransformation());
+        variousTransformation.put("spherical", new SphericalTransformation());
+        variousTransformation.put("spiral", new SpiralTransformation());
     }
 
     private void printTransformation() {
@@ -61,72 +62,103 @@ public class InputSimpleParam {
         int counterTransformation = 0;
         for (Map.Entry<String, Transformation> item : variousTransformation.entrySet()) {
             counterTransformation++;
-            printStream.println(counterTransformation + ") " + item.getKey());
+            printStream.println("["+ counterTransformation + "] " + item.getKey());
         }
     }
 
-    @Getter
-    private Map<String, Transformation> variousTransformation;
-
-    @Getter
-    private List<Space> spaces;
-
-    @Getter private int height = 1080;
-    @Getter private int weight = 1920;
-    @Getter private int sampleCount = 2000;
-    @Getter private int iterationCount = 1000;
-
-    @Getter private int spaceCount = 40;
-
-    @Getter private int symmetryCount = 4;
-    @Getter private int threadCount = 6;
-
-    @Getter private static int numberTransformation;
-
-    private boolean isValid(Integer x) {
-        return (x > 0) && x < 10000;
+    private void initializationAffineSpace() {
+        for (int i = 0; i < spaceCount; i++) {
+            spaces.add(new Space());
+        }
     }
 
-    private int inputParseString(String inputText, String input) {
+    private boolean isValid(Integer x, Integer limitTop) {
+        return (x > 0) && x < limitTop;
+    }
+
+    private int inputParam(String inputText, Integer num,  Integer limitTop) {
+        printStream.print(inputText);
         while (true) {
+            String input = scan.nextLine();
             try {
-                //todo: закиливание если слишком много ввели
-                int num = Integer.parseInt(input);
-                if (isValid(num)) {
+                if (input.isEmpty()) {
                     return num;
+                }
+                int termNum = Integer.parseInt(input);
+                if (isValid(termNum,limitTop)) {
+                    return termNum;
                 }
                 printStream.println("не верный размер");
             } catch (RuntimeException exception) {
-                printStream.println("Введено не число, попробуйте еще раз! ");
+                printStream.println("Введено не число, попробуйте еще раз!");
             }
             printStream.print(inputText);
         }
     }
 
-    private int inputValue(String inputText, Integer num) {
-        printStream.print(inputText);
-        String input = scan.nextLine();
-        if (!input.isEmpty()) {
-            return inputParseString(inputText, input);
+
+    private String inputTypeTransformation(String textInput) {
+        printTransformation();
+        printStream.print(textInput);
+
+        while (true) {
+            String input = scan.nextLine();
+            if (input.isEmpty()) {
+                return typeTransformation;
+            }
+            String termInput = input.trim().toLowerCase();
+            if (variousTransformation.get(termInput) != null) {
+                return termInput;
+            } else {
+                printStream.println("Ввод не корректный! Попробуйте еще раз!");
+                printStream.print(textInput);
+            }
         }
-        return num;
     }
 
-    //todo: ограничение на тип транспозиции
+    private String inputTypeImage(String text){
+        ImageFormat imageFormat;
+        while(true){
+            printStream.print(text);
+            String input = scan.nextLine();
+            try{
+                imageFormat = ImageFormat.valueOf(input.toUpperCase());
+                return imageFormat.toString();
+            }catch (IllegalArgumentException exception){
+                printStream.println("Невернный ввод, попробуйте еще раз!");
+            }
+        }
+    }
+
+
     public void input() {
-        height = inputValue("[" + count++ + "] Введите высоту картинки: ", height);
-        weight = inputValue("[" + count++ + "] Введите ширину картинки: ", weight);
-        sampleCount = inputValue("[" + count++ + "] Введите количество выборок для рендеринга: ", sampleCount);
-        iterationCount = inputValue("[" + count++ + "] Введите количество итераций для выборки: ", iterationCount);
-        spaceCount = inputValue("[" + count++ + "] Введите количество аффинных пространств: ", spaceCount);
-        createAffineSpace();
-        symmetryCount = inputValue("[" + count++ + "] Введите количество симметрий: ", symmetryCount);
-        threadCount = inputValue("[" + count++ + "] Введите количество потоков: ", threadCount);
+        printStream.println("При нажатии Enter - конфигурации устанавливается дефолтное значение!");
+
+        height = inputParam(String.format("[%d] Введите высоту картинки: ", count++), height, MAX_SIZE);
+        weight = inputParam(String.format("[%d] Введите ширину картинки: ", count++), weight, MAX_SIZE);
+        sampleCount = inputParam(String.format("[%d] Введите количество выборок для рендеринга: ", count++), sampleCount,MAX_CONFIG);
+        iterationCount = inputParam(String.format("[%d] Введите количество итераций для выборки: ", count++), iterationCount, MAX_CONFIG);
+        spaceCount = inputParam(String.format("[%d] Введите количество аффинных пространств: ", count++), spaceCount,MAX_CONFIG);
+        initializationAffineSpace();
+
+        symmetryCount = inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,MAX_SYMMETRY_THREAD);
+        threadCount = inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount,MAX_SYMMETRY_THREAD);
+        typeImageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
+        typeTransformation = inputTypeTransformation("Введите вид трансформации: ");
+    }
 
-        printTransformation();
-        printStream.print("Введите вид трансформации: ");
-
-
+    public void inputPrintConfig(){
+        count =1;
+        printStream.println("========================================================");
+        printStream.println("Параметры настроек:");
+        printStream.printf("[%d] Размер изображения: %dx%d%n", count++, height, weight);
+        printStream.printf("[%d] Выборок для рендинга: %d%n", count++, sampleCount);
+        printStream.printf("[%d] Количество итераций для выборки: %d%n", count++, iterationCount);
+        printStream.printf("[%d] Количество аффинных пространств: %d%n", count++, spaceCount);
+        printStream.printf("[%d] Количество симметрий: %d%n", count++, symmetryCount);
+        printStream.printf("[%d] Количество потоков: %d%n", count++, threadCount);
+        printStream.printf("[%d] Вид трансформации: %s%n", count++, typeTransformation);
+        printStream.printf("[%d] Формат фото: %s%n", count++, typeImageFormat);
     }
 }
