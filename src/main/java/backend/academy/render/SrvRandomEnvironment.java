@@ -9,14 +9,14 @@ import java.util.List;
 
 class SrvRandomEnvironment {
     private List<Space> spaces;
-    private List<Transformation> transformations;
+    private Transformation transformations;
 
     @Getter
     private Space randomSpace;
     @Getter
     private Point randomPoint;
 
-    public SrvRandomEnvironment(List<Space> spaces, List<Transformation> transformations) {
+    public SrvRandomEnvironment(List<Space> spaces, Transformation transformations) {
         this.spaces = spaces;
         this.transformations = transformations;
     }
@@ -27,7 +27,7 @@ class SrvRandomEnvironment {
 
         //Рандомноая трансформация
 //        Transformation transformationFunction = transformations.get(SrcRandom.getRandomInt(0, transformations.size()));
-        Transformation transformationFunction = transformations.get(2);
+        Transformation transformationFunction = transformations;
 
         point = termSpace.apply(point);
 

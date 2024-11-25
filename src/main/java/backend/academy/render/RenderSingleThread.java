@@ -10,7 +10,7 @@ public class RenderSingleThread implements Renderer {
     public void rend(
         FractalImage fractalImage,
         List<Space> spaces,
-        List<Transformation> transformation,
+        Transformation transformation,
         int numberSamples,
         int iterationSample,
         int symmetry,

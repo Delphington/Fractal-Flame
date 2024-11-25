@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface Renderer {
 
     void rend(
-        FractalImage fractalImage, List<Space> spaces, List<Transformation> transformation,
+        FractalImage fractalImage, List<Space> spaces, Transformation transformation,
         int numberSamples, int iterationSample, int symmetry, Rect rect
     );
 

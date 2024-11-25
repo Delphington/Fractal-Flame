@@ -17,17 +17,16 @@ import java.util.List;
 @UtilityClass
 public class StartProgram {
     public static void start() throws IOException {
-        System.out.println("Syyys");
 
         InputSimpleParam srvInput = new InputSimpleParam();
         srvInput.input();
 
         FractalImage fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
-        List<Transformation> transformations1 = srvInput.transformations();
+        Transformation transformations1 = srvInput.variousTransformation().get("Diamond");
         List<Space> spaces = srvInput.spaces();
         RenderSingleThread render = new RenderSingleThread();
 
-        Rect rect = new Rect(-3, -2, 6, 6);
+        Rect rect = new Rect(-2.5, -2.4, 5.8, 5.2);
 
             // Рендеринг фрактального изображения с заданными параметрами
         render.rend(

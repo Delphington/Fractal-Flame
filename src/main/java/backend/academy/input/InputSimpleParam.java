@@ -16,35 +16,24 @@ import backend.academy.transformation.Transformation;
 import lombok.Getter;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class InputSimpleParam {
     private PrintStream printStream = System.out;
     private Scanner scan = new Scanner(System.in);
     private int count = 1;
+    private static int counterTransformation = 0;
+
     //Todo; ввод типа трансформации
 
     public InputSimpleParam() {
         //Заполнение аффинными пространственнами
         spaces = new ArrayList<>();
-
-        //---------------------
-        transformations = new ArrayList<>();
-
-        transformations.add(new EyefishTransformation());
-
-        transformations.add(new DiamondTransformation());
-        transformations.add(new DiscTransformation());
-
-        transformations.add(new HandkerchiefTransformation());
-        transformations.add(new HorseshoeTransformation());
-        transformations.add(new HyperbolicTransformation());
-        transformations.add(new LinearTransformation());
-        transformations.add(new PolarTransformation());
-        transformations.add(new SinTransformation());
-        transformations.add(new SphericalTransformation());
-        transformations.add(new SpiralTransformation());
+        variousTransformation = new HashMap<>();
+        initializationTransformation();
     }
 
     private void createAffineSpace() {
@@ -53,10 +42,34 @@ public class InputSimpleParam {
         }
     }
 
+    private void initializationTransformation() {
+        variousTransformation.put("Eyefish", new EyefishTransformation());
+        variousTransformation.put("Diamond", new DiamondTransformation());
+        variousTransformation.put("Disc", new DiscTransformation());
+        variousTransformation.put("Handkerchief", new HandkerchiefTransformation());
+        variousTransformation.put("Horseshoe", new HorseshoeTransformation());
+        variousTransformation.put("Hyperbolic", new HyperbolicTransformation());
+        variousTransformation.put("Linear", new LinearTransformation());
+        variousTransformation.put("Polar", new PolarTransformation());
+        variousTransformation.put("Sin", new SinTransformation());
+        variousTransformation.put("Spherical", new SphericalTransformation());
+        variousTransformation.put("Spiral", new SpiralTransformation());
+    }
+
+    private void printTransformation() {
+        printStream.println("Виды трансформации: ");
+        int counterTransformation = 0;
+        for (Map.Entry<String, Transformation> item : variousTransformation.entrySet()) {
+            counterTransformation++;
+            printStream.println(counterTransformation + ") " + item.getKey());
+        }
+    }
+
+    @Getter
+    private Map<String, Transformation> variousTransformation;
+
     @Getter
     private List<Space> spaces;
-    @Getter
-    List<Transformation> transformations;
 
     @Getter private int height = 1080;
     @Getter private int weight = 1920;
@@ -99,6 +112,7 @@ public class InputSimpleParam {
         return num;
     }
 
+    //todo: ограничение на тип транспозиции
     public void input() {
         height = inputValue("[" + count++ + "] Введите высоту картинки: ", height);
         weight = inputValue("[" + count++ + "] Введите ширину картинки: ", weight);
@@ -108,5 +122,11 @@ public class InputSimpleParam {
         createAffineSpace();
         symmetryCount = inputValue("[" + count++ + "] Введите количество симметрий: ", symmetryCount);
         threadCount = inputValue("[" + count++ + "] Введите количество потоков: ", threadCount);
+        printStream.println("----------------------------------");
+
+        printTransformation();
+        printStream.print("Введите вид трансформации: ");
+
+
     }
 }
