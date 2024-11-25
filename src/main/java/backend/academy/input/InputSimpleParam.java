@@ -33,15 +33,15 @@ public class InputSimpleParam implements Constance {
     @Getter private Map<String, Transformation> variousTransformation;
     @Getter private List<Space> spaces;
     //Дефолтное заполение переменных
-    @Getter private String typeTransformation = "spiral";
-    @Getter private int height = 1080;
-    @Getter private int weight = 1920;
-    @Getter private int sampleCount = 2000;
-    @Getter private int iterationCount = 1000;
-    @Getter private int spaceCount = 40;
-    @Getter private int symmetryCount = 4;
-    @Getter private int threadCount = 6;
-    @Getter private ImageFormat imageFormat = ImageFormat.PNG;
+    @Getter private String typeTransformation;
+    @Getter private int height;
+    @Getter private int weight;
+    @Getter private int sampleCount;
+    @Getter private int iterationCount;
+    @Getter private int spaceCount;
+    @Getter private int symmetryCount;
+    @Getter private int threadCount;
+    @Getter private ImageFormat imageFormat;
 
     public InputSimpleParam() {
         spaces = new ArrayList<>();
@@ -57,6 +57,17 @@ public class InputSimpleParam implements Constance {
         variousTransformation.put("sin", new SinTransformation());
         variousTransformation.put("spherical", new SphericalTransformation());
         variousTransformation.put("spiral", new SpiralTransformation());
+
+        typeTransformation = DEFAULT_TYPE_TRANSFORMATION;
+        height = DEFAULT_HEIGHT;
+        weight = DEFAULT_WEIGHT;
+        sampleCount = DEFAULT_SAMPLE_COUNT;
+        iterationCount = DEFAULT_ITERATION_COUNT;
+        spaceCount = DEFAULT_SPACE_COUNT;
+        symmetryCount = DEFAULT_SYMMETRY_COUNT;
+        threadCount = DEFAULT_THREAD_COUNT;
+        imageFormat = DEFAULT_IMAGE_FORMAT;
+
     }
 
     private void printTransformation() {
@@ -64,7 +75,7 @@ public class InputSimpleParam implements Constance {
         int counterTransformation = 0;
         for (Map.Entry<String, Transformation> item : variousTransformation.entrySet()) {
             counterTransformation++;
-            printStream.println("["+ counterTransformation + "] " + item.getKey());
+            printStream.println("[" + counterTransformation + "] " + item.getKey());
         }
     }
 
@@ -78,7 +89,7 @@ public class InputSimpleParam implements Constance {
         return (x > 0) && x < limitTop;
     }
 
-    private int inputParam(String inputText, Integer num,  Integer limitTop) {
+    private int inputParam(String inputText, Integer num, Integer limitTop) {
         printStream.print(inputText);
         while (true) {
             String input = scan.nextLine();
@@ -87,7 +98,7 @@ public class InputSimpleParam implements Constance {
                     return num;
                 }
                 int termNum = Integer.parseInt(input);
-                if (isValid(termNum,limitTop)) {
+                if (isValid(termNum, limitTop)) {
                     return termNum;
                 }
                 printStream.println("не верный размер");
@@ -97,7 +108,6 @@ public class InputSimpleParam implements Constance {
             printStream.print(inputText);
         }
     }
-
 
     private String inputTypeTransformation(String textInput) {
         printTransformation();
@@ -118,43 +128,49 @@ public class InputSimpleParam implements Constance {
         }
     }
 
-    private ImageFormat inputTypeImage(String text){
+    private ImageFormat inputTypeImage(String text) {
         ImageFormat termImageFormat;
-        while(true){
+        while (true) {
             printStream.print(text);
             String input = scan.nextLine();
-            if (input.isEmpty()){
+            if (input.isEmpty()) {
                 return imageFormat;
             }
-            try{
+            try {
                 termImageFormat = ImageFormat.valueOf(input.toUpperCase());
                 return termImageFormat;
-            }catch (IllegalArgumentException exception){
+            } catch (IllegalArgumentException exception) {
                 printStream.println("Невернный ввод, попробуйте еще раз!");
             }
         }
     }
-
 
     public void input() {
         printStream.println("При нажатии Enter - конфигурации устанавливается дефолтное значение!");
 
         height = inputParam(String.format("[%d] Введите высоту картинки: ", count++), height, MAX_SIZE);
         weight = inputParam(String.format("[%d] Введите ширину картинки: ", count++), weight, MAX_SIZE);
-        sampleCount = inputParam(String.format("[%d] Введите количество выборок для рендеринга: ", count++), sampleCount,MAX_CONFIG);
-        iterationCount = inputParam(String.format("[%d] Введите количество итераций для выборки: ", count++), iterationCount, MAX_CONFIG);
-        spaceCount = inputParam(String.format("[%d] Введите количество аффинных пространств: ", count++), spaceCount,MAX_CONFIG);
+        sampleCount =
+            inputParam(String.format("[%d] Введите количество выборок для рендеринга: ", count++), sampleCount,
+                MAX_CONFIG);
+        iterationCount =
+            inputParam(String.format("[%d] Введите количество итераций для выборки: ", count++), iterationCount,
+                MAX_CONFIG);
+        spaceCount = inputParam(String.format("[%d] Введите количество аффинных пространств: ", count++), spaceCount,
+            MAX_CONFIG);
         initializationAffineSpace();
 
-        symmetryCount = inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,MAX_SYMMETRY_THREAD);
-        threadCount = inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount,MAX_SYMMETRY_THREAD);
+        symmetryCount = inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,
+            MAX_SYMMETRY_THREAD);
+        threadCount =
+            inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount, MAX_SYMMETRY_THREAD);
         imageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
         typeTransformation = inputTypeTransformation("Введите вид трансформации: ");
     }
 
-    public void printInputConfig(){
-        count =1;
+    public void printInputConfig() {
+        count = 1;
         printStream.println("========================================================");
         printStream.println("Параметры настроек:");
         printStream.printf("[%d] Размер изображения: %dx%d%n", count++, height, weight);
