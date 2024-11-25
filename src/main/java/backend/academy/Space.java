@@ -11,9 +11,9 @@ public class Space {
      * =                =
      * y(n+1)     (d, e)  (yn)     (f)
      */
-    private final int MAX_COLOR = 256;
-    private final double MIN_NUMBER = -1.5;
-    private final double MAX_NUMBER = 1.5;
+    private final static int MAX_COLOR = 256;
+    private final static double MIN_NUMBER = -1.5;
+    private final static double MAX_NUMBER = 1.5;
 
     private int red;
     private int green;

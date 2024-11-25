@@ -15,9 +15,4 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     public Pixel pixel(int x, int y) {
         return data[y][x];
     }
-    // Метод для проверки, находится ли точка внутри границ изображения
-    public boolean isInImage(Point point) {
-        return point.x() >= 0 && point.x() < width && point.y() >= 0 &&
-            point.y() < height; // Проверяем, что координаты точки находятся в пределах ширины и высоты изображения
-    }
 }

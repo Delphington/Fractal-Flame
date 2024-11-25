@@ -15,7 +15,8 @@ public class RenderSingleThread implements Renderer {
         int symmetry,
         Rect rect) {
         for (int i = 0; i < numberSamples; i++) {
-            transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation), symmetry, iterationSample, rect);
+            transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation),
+                symmetry, iterationSample, rect);
         }
     }
 }

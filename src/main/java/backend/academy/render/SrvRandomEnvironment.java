@@ -16,20 +16,24 @@ class SrvRandomEnvironment {
     @Getter
     private Point randomPoint;
 
-    public SrvRandomEnvironment(List<Space> spaces, Transformation transformation) {
+    SrvRandomEnvironment(List<Space> spaces, Transformation transformation) {
         this.spaces = spaces;
         this.transformation = transformation;
     }
 
-    public Point generateResource(Point point) {
+    Point generateResource(Point point) {
         //Рандомное аффиное пространство
         Space termSpace = spaces.get(SrcRandom.getRandomInt(0, spaces.size()));
         //тут создавал transformation и к нему применял
 
-        point = termSpace.apply(point);
-        point = transformation.apply(point); //преобразование
+        // Применяем преобразование к точке
+        Point transformedPoint = termSpace.apply(point);
+        transformedPoint = transformation.apply(transformedPoint); // преобразование
+
+        // Сохраняем случайное пространство и точку
         randomSpace = termSpace;
-        randomPoint = point;
-        return point;
+        randomPoint = transformedPoint;
+
+        return transformedPoint;
     }
 }

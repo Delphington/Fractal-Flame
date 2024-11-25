@@ -3,8 +3,8 @@ package backend.academy;
 import backend.academy.config.ImageUtils;
 import backend.academy.input.InputSimpleParam;
 import backend.academy.post.GammaCorrection;
-import backend.academy.render.RenderSingleThread;
 import backend.academy.render.Rect;
+import backend.academy.render.RenderSingleThread;
 import backend.academy.transformation.Transformation;
 import java.nio.file.Path;
 import java.util.List;
@@ -15,6 +15,11 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class StartProgram {
+    private final static double RECT_X = -2.5;
+    private final static double RECT_Y = -2.5;
+    private final static double RECT_WIDTH = 5.8;
+    private final static double RECT_HEIGHT = 5.2;
+
     public static void start() {
 
         InputSimpleParam srvInput = new InputSimpleParam();
@@ -33,12 +38,12 @@ public class StartProgram {
             srvInput.sampleCount(),
             srvInput.iterationCount(),
             srvInput.symmetryCount(),
-            new Rect(-2.5, -2.4, 5.8, 5.2)
+            new Rect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT)
         );
 
         GammaCorrection.gammaCorrection(fractalImage);
 
-        ImageUtils.save(fractalImage, Path.of("src/main/resources/img"),
-            srvInput.imageFormat()); // Сохранение уменьшенного изображения в файл
+        // Сохранение уменьшенного изображения в файл
+        ImageUtils.save(fractalImage, Path.of("src/main/resources/img"), srvInput.imageFormat());
     }
 }

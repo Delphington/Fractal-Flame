@@ -6,7 +6,6 @@ import backend.academy.Point;
 import backend.academy.Space;
 import backend.academy.SrcRandom;
 import backend.academy.transformation.Transformation;
-import javax.swing.text.html.Option;
 import java.awt.Color;
 import java.util.List;
 import java.util.Optional;

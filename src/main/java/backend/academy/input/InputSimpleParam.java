@@ -3,7 +3,6 @@ package backend.academy.input;
 import backend.academy.Constance;
 import backend.academy.Space;
 import backend.academy.config.ImageFormat;
-import backend.academy.config.ImageUtils;
 import backend.academy.transformation.DiamondTransformation;
 import backend.academy.transformation.DiscTransformation;
 import backend.academy.transformation.EyefishTransformation;

@@ -1,14 +1,17 @@
 package backend.academy.config;
 
 import backend.academy.FractalImage;
-import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import javax.imageio.ImageIO;
+
 
 public final class ImageUtils {
-    private ImageUtils() {}
+    private ImageUtils() {
+    }
 
     public static void save(FractalImage image, Path filename, ImageFormat format) {
         int width = image.width();
@@ -28,9 +31,8 @@ public final class ImageUtils {
         try {
             File outputFile = new File(filename + "." + format.format());
             ImageIO.write(images, format.format(), outputFile);
-            System.out.println("Изображение сохранено как output.png");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Файл не получилось сохранить");
         }
     }
 }

@@ -1,9 +1,9 @@
 package backend.academy;
 
 import backend.academy.render.Rect;
-import lombok.experimental.UtilityClass;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class SrcRandom {
