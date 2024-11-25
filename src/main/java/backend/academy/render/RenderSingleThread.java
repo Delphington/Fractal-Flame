@@ -9,15 +9,16 @@ public class RenderSingleThread implements Renderer {
 
     public void rend(
         FractalImage fractalImage,
-        List<Space> affineSpaces,
-        List<Transformation> transformationFunctions,
+        List<Space> spaces,
+        List<Transformation> transformation,
         int numberSamples,
-        int iterationPerSample,
-        int symmetry) {
+        int iterationSample,
+        int symmetry,
+        Rect rect) {
 
         for (int i = 0; i < numberSamples; i++) {
-            transformPoint(fractalImage, new SrvRandomEnvironment(affineSpaces, transformationFunctions),
-                symmetry, iterationPerSample);
+            transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation), symmetry,
+                iterationSample, rect);
         }
     }
 }
