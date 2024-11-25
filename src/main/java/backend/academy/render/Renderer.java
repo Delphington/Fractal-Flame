@@ -52,12 +52,11 @@ public interface Renderer {
 
             Optional<Pixel> optional = getMapPixel(fractalImage, termPoint, rect);
 
-            if (optional.isPresent()) {
-                Pixel pixel = optional.get();
+            optional.ifPresent(pixel -> {
                 synchronized (pixel) {
                     changePixel(pixel, Space.color());
                 }
-            }
+            });
 
         }
 
@@ -88,7 +87,7 @@ public interface Renderer {
 
     private Optional<Pixel> getMapPixel(FractalImage fractalImage, Point point, Rect world) {
         if (!world.contains(point)) {
-            return Optional.empty();
+            return Optional.ofNullable(null);
         }
 
         Pixel p = fractalImage.pixel(
