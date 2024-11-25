@@ -5,7 +5,6 @@ import lombok.ToString;
 import org.checkerframework.checker.units.qual.C;
 import java.awt.Color;
 import java.util.Random;
-//import static backend.academy.render.HabrRendererSingleThreaded.randomDouble;
 
 //todo: запросить количество аффиных пространтсв
 
@@ -54,10 +53,10 @@ public class Space {
     }
 
     private void generateRandom() {
-        red = (int) (Math.random() * MAX_COLOR);
-        green = (int) (Math.random() * MAX_COLOR);
-        blue = (int) (Math.random() * MAX_COLOR);
         Random random = new Random();
+        red = random.nextInt(MAX_COLOR);
+        green = random.nextInt(MAX_COLOR);
+        blue = random.nextInt(MAX_COLOR);
         color = new Color(red, green,blue);
 
         // Генерация случайного числа в диапазоне от -1.5 до 1.5
@@ -71,7 +70,6 @@ public class Space {
             e = min + (max - min) * random.nextDouble();
             c = min + (max - min) * random.nextDouble();
             f = min + (max - min) * random.nextDouble();
-
         } while (!checkConditional());
     }
 
@@ -79,6 +77,5 @@ public class Space {
     public Point apply(Point point) {
         return new Point(a * point.x() + b * point.y() + c, d * point.x() + e * point.y() + f);
     }
-
 
 }

@@ -3,6 +3,7 @@ package backend.academy.input;
 import backend.academy.Constance;
 import backend.academy.Space;
 import backend.academy.config.ImageFormat;
+import backend.academy.config.ImageUtils;
 import backend.academy.transformation.DiamondTransformation;
 import backend.academy.transformation.DiscTransformation;
 import backend.academy.transformation.EyefishTransformation;
@@ -39,7 +40,7 @@ public class InputSimpleParam implements Constance {
     @Getter private int spaceCount = 40;
     @Getter private int symmetryCount = 4;
     @Getter private int threadCount = 6;
-    @Getter private String typeImageFormat = "png";
+    @Getter private ImageFormat imageFormat = ImageFormat.PNG;
 
     public InputSimpleParam() {
         spaces = new ArrayList<>();
@@ -116,14 +117,17 @@ public class InputSimpleParam implements Constance {
         }
     }
 
-    private String inputTypeImage(String text){
-        ImageFormat imageFormat;
+    private ImageFormat inputTypeImage(String text){
+        ImageFormat termImageFormat;
         while(true){
             printStream.print(text);
             String input = scan.nextLine();
+            if (input.isEmpty()){
+                return imageFormat;
+            }
             try{
-                imageFormat = ImageFormat.valueOf(input.toUpperCase());
-                return imageFormat.toString();
+                termImageFormat = ImageFormat.valueOf(input.toUpperCase());
+                return termImageFormat;
             }catch (IllegalArgumentException exception){
                 printStream.println("Невернный ввод, попробуйте еще раз!");
             }
@@ -143,12 +147,12 @@ public class InputSimpleParam implements Constance {
 
         symmetryCount = inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,MAX_SYMMETRY_THREAD);
         threadCount = inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount,MAX_SYMMETRY_THREAD);
-        typeImageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
+        imageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
         typeTransformation = inputTypeTransformation("Введите вид трансформации: ");
     }
 
-    public void inputPrintConfig(){
+    public void printInputConfig(){
         count =1;
         printStream.println("========================================================");
         printStream.println("Параметры настроек:");
@@ -159,6 +163,6 @@ public class InputSimpleParam implements Constance {
         printStream.printf("[%d] Количество симметрий: %d%n", count++, symmetryCount);
         printStream.printf("[%d] Количество потоков: %d%n", count++, threadCount);
         printStream.printf("[%d] Вид трансформации: %s%n", count++, typeTransformation);
-        printStream.printf("[%d] Формат фото: %s%n", count++, typeImageFormat);
+        printStream.printf("[%d] Формат фото: %s%n", count++, imageFormat);
     }
 }

@@ -1,4 +1,6 @@
-package backend.academy;
+package backend.academy.post;
+
+import backend.academy.FractalImage;
 
 // пост-обработка in-place, например, гамма-коррекция
 @FunctionalInterface

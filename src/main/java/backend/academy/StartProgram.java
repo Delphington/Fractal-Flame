@@ -21,15 +21,14 @@ public class StartProgram {
 
         InputSimpleParam srvInput = new InputSimpleParam();
         srvInput.input();
+        srvInput.printInputConfig();
+
 
         FractalImage fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
         Transformation transformations1 = srvInput.variousTransformation().get(srvInput.typeTransformation());
         List<Space> spaces = srvInput.spaces();
         RenderSingleThread render = new RenderSingleThread();
 
-        Rect rect = new Rect(-2.5, -2.4, 5.8, 5.2);
-
-            // Рендеринг фрактального изображения с заданными параметрами
         render.rend(
             fractalImage,
             spaces,
@@ -37,12 +36,12 @@ public class StartProgram {
             srvInput.sampleCount(),
             srvInput.iterationCount(),
             srvInput.symmetryCount(),
-            rect
+            new Rect(-2.5, -2.4, 5.8, 5.2)
         );
 
         GammaCorrection.gammaCorrection(fractalImage);
 
         ImageUtils.save(fractalImage, Path.of("src/main/resources/img"),
-            ImageFormat.PNG); // Сохранение уменьшенного изображения в файл
+            srvInput.imageFormat()); // Сохранение уменьшенного изображения в файл
     }
 }
