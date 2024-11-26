@@ -3,17 +3,17 @@ package backend.academy.input;
 import backend.academy.Constance;
 import backend.academy.Space;
 import backend.academy.config.ImageFormat;
+import backend.academy.transformation.BubbleTransformation;
+import backend.academy.transformation.CrossTransformation;
 import backend.academy.transformation.DiamondTransformation;
 import backend.academy.transformation.DiscTransformation;
-import backend.academy.transformation.EyefishTransformation;
 import backend.academy.transformation.HandkerchiefTransformation;
-import backend.academy.transformation.HorseshoeTransformation;
 import backend.academy.transformation.HyperbolicTransformation;
-import backend.academy.transformation.LinearTransformation;
 import backend.academy.transformation.PolarTransformation;
 import backend.academy.transformation.SinTransformation;
 import backend.academy.transformation.SphericalTransformation;
 import backend.academy.transformation.SpiralTransformation;
+import backend.academy.transformation.TangentTransformation;
 import backend.academy.transformation.Transformation;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -48,17 +48,17 @@ public class InputSimpleParam implements Constance {
     public InputSimpleParam() {
         spaces = new ArrayList<>();
         variousTransformation = new HashMap<>();
-        variousTransformation.put("eyefish", new EyefishTransformation());
         variousTransformation.put("diamond", new DiamondTransformation());
         variousTransformation.put("disc", new DiscTransformation());
         variousTransformation.put("handkerchief", new HandkerchiefTransformation());
-        variousTransformation.put("horseshoe", new HorseshoeTransformation());
         variousTransformation.put("hyperbolic", new HyperbolicTransformation());
-        variousTransformation.put("linear", new LinearTransformation());
         variousTransformation.put("polar", new PolarTransformation());
         variousTransformation.put("sin", new SinTransformation());
         variousTransformation.put("spherical", new SphericalTransformation());
         variousTransformation.put("spiral", new SpiralTransformation());
+        variousTransformation.put("cross", new CrossTransformation());
+        variousTransformation.put("tangent", new TangentTransformation());
+        variousTransformation.put("bubble", new BubbleTransformation());
 
         typeTransformation = DEFAULT_TYPE_TRANSFORMATION;
         height = DEFAULT_HEIGHT;
@@ -121,7 +121,7 @@ public class InputSimpleParam implements Constance {
                 return typeTransformation;
             }
             String termInput = input.trim().toLowerCase();
-            if (variousTransformation.get(termInput) != null) {
+            if (variousTransformation.get(termInput.toLowerCase()) != null) {
                 return termInput;
             } else {
                 printStream.println("Ввод не корректный! Попробуйте еще раз!");
