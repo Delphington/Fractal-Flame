@@ -7,8 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
+import lombok.extern.log4j.Log4j2;
 
-
+@Log4j2
 public final class ImageUtils {
     private ImageUtils() {
     }
@@ -22,7 +23,7 @@ public final class ImageUtils {
         // Заполнение изображения данными из массива RGB
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                images.setRGB(x, y,
+                images.setRGB(x, y,  //todo: исключение по переполнению
                     new Color(image.pixel(x, y).r(), image.pixel(x, y).g(), image.pixel(x, y).b()).getRGB());
             }
         }
@@ -33,6 +34,7 @@ public final class ImageUtils {
             ImageIO.write(images, format.format(), outputFile);
         } catch (IOException e) {
             System.err.println("Файл не получилось сохранить");
+            log.error("Не получилось сохранить файл");
         }
     }
 }

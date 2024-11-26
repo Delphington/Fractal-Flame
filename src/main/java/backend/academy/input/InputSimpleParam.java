@@ -22,9 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 
 //todo: не все работают
 
+@Log4j2
 public class InputSimpleParam implements Constance {
     private final PrintStream printStream = System.out;
     private final Scanner scan = new Scanner(System.in);
@@ -167,6 +169,7 @@ public class InputSimpleParam implements Constance {
         imageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
         typeTransformation = inputTypeTransformation("Введите вид трансформации: ");
+        log.info("Закончен ввод данных");
     }
 
     public void printInputConfig() {

@@ -20,7 +20,8 @@ public interface Renderer {
 
     default void transformPoint(
         FractalImage fractalImage,
-        SrvRandomEnvironment srvRandomEnvironment, int symmetry,
+        SrvRandomEnvironment srvRandomEnvironment,
+        int symmetry,
         int iterationSample, Rect rect
     ) {
 

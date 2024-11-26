@@ -5,7 +5,7 @@ import backend.academy.Space;
 import backend.academy.transformation.Transformation;
 import java.util.List;
 
-public class RenderSingleThread implements Renderer {
+public class SingleThreadRender implements Renderer {
     public void rend(
         FractalImage fractalImage,
         List<Space> spaces,
@@ -18,5 +18,7 @@ public class RenderSingleThread implements Renderer {
             transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation),
                 symmetry, iterationSample, rect);
         }
+
+
     }
 }
