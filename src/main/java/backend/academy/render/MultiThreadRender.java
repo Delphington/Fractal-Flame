@@ -30,8 +30,9 @@ public class MultiThreadRender implements Render {
     ) {
 
         for (int num = 0; num < numberSamples; num++) {
-            Runnable task = () -> transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation), symmetry,
-                iterationSample, rect);
+            Runnable task =
+                () -> transformPoint(fractalImage, new SrvRandomEnvironment(spaces, transformation),
+                    symmetry, iterationSample, rect);
             executorService.execute(task);
         }
         executorService.shutdown();
