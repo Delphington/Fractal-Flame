@@ -1,4 +1,4 @@
-package backend.academy.config;
+package backend.academy.output;
 
 import lombok.Getter;
 

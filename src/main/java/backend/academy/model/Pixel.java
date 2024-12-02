@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ public class Pixel {
     private int r;
     private int g;
     private int b;
-    private volatile int hitCount = 0; // Счетчик обращений к пикселю
+    private volatile int cnt = 0; // Счетчик обращений к пикселю
     private double normal = 0;
 
     public Pixel() {
@@ -19,7 +19,7 @@ public class Pixel {
         this.r = r;
         this.g = g;
         this.b = b;
-        this.hitCount = hitCount;
+        this.cnt = hitCount;
     }
 
     public void setColor(int r, int g, int b) {

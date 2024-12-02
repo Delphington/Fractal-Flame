@@ -1,5 +1,8 @@
-package backend.academy;
+package backend.academy.model;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public record FractalImage(Pixel[][] data, int width, int height) {
 
     public static FractalImage create(int width, int height) {
@@ -13,6 +16,10 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     }
 
     public Pixel pixel(int x, int y) {
-        return data[y][x];
+        if(x>=0 && x<=width &&  y>=0 && y<height) {
+            return data[y][x];
+        }
+        log.warn("Не корретный запрос пикселя в классе FractalImage.pixel");
+        throw new RuntimeException("Не корретный запрос");
     }
 }

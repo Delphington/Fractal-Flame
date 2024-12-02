@@ -1,16 +1,16 @@
 package backend.academy.render;
 
-import backend.academy.FractalImage;
-import backend.academy.Space;
+import backend.academy.model.FractalImage;
+import backend.academy.model.Space;
 import backend.academy.transformation.Transformation;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import lombok.extern.log4j.Log4j2;
 
-//todo: поменять имя transformPoint
-
-public class MultiThreadRender implements Renderer {
+@Log4j2
+public class MultiThreadRender implements Render {
 
     private final ExecutorService executorService;
 
@@ -30,7 +30,6 @@ public class MultiThreadRender implements Renderer {
     ) {
 
         for (int num = 0; num < numberSamples; num++) {
-
             Runnable task = new Runnable() {
                 @Override
                 public void run() {
@@ -45,7 +44,9 @@ public class MultiThreadRender implements Renderer {
         try {
             executorService.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
+            log.error("Ошибка при выволнение многопоточности: " + e.getStackTrace());
             throw new RuntimeException(e);
+
         }
 
     }

@@ -1,8 +1,7 @@
 package backend.academy.input;
 
-import backend.academy.Constance;
-import backend.academy.Space;
-import backend.academy.config.ImageFormat;
+import backend.academy.model.Space;
+import backend.academy.output.ImageFormat;
 import backend.academy.transformation.BubbleTransformation;
 import backend.academy.transformation.CrossTransformation;
 import backend.academy.transformation.DiamondTransformation;
@@ -22,9 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-
-//todo: не все работают
 
 @Log4j2
 public class InputSimpleParam implements Constance {
@@ -32,18 +30,31 @@ public class InputSimpleParam implements Constance {
     private final Scanner scan = new Scanner(System.in);
     private int count = 1;
 
-    @Getter private Map<String, Transformation> variousTransformation;
-    @Getter private List<Space> spaces;
-    //Дефолтное заполение переменных
-    @Getter private String typeTransformation;
-    @Getter private int height;
-    @Getter private int weight;
-    @Getter private int sampleCount;
-    @Getter private int iterationCount;
-    @Getter private int spaceCount;
-    @Getter private int symmetryCount;
-    @Getter private int threadCount;
-    @Getter private ImageFormat imageFormat;
+    @Getter @Setter
+    private static InputSimpleParam inputSrv;
+
+    @Getter
+    private Map<String, Transformation> variousTransformation;
+    @Getter
+    private List<Space> spaces;
+    @Getter
+    private String typeTransformation;
+    @Getter
+    private int height;
+    @Getter
+    private int weight;
+    @Getter
+    private int sampleCount;
+    @Getter
+    private int iterationCount;
+    @Getter
+    private int spaceCount;
+    @Getter
+    private int symmetryCount;
+    @Getter @Setter
+    private int threadCount;
+    @Getter
+    private ImageFormat imageFormat;
 
     public InputSimpleParam() {
         spaces = new ArrayList<>();
@@ -69,6 +80,7 @@ public class InputSimpleParam implements Constance {
         symmetryCount = DEFAULT_SYMMETRY_COUNT;
         threadCount = DEFAULT_THREAD_COUNT;
         imageFormat = DEFAULT_IMAGE_FORMAT;
+        initializationAffineSpace();
 
     }
 
@@ -82,6 +94,7 @@ public class InputSimpleParam implements Constance {
     }
 
     private void initializationAffineSpace() {
+        spaces.clear();
         for (int i = 0; i < spaceCount; i++) {
             spaces.add(new Space());
         }
@@ -89,26 +102,6 @@ public class InputSimpleParam implements Constance {
 
     private boolean isValid(Integer x, Integer limitTop) {
         return (x > 0) && x < limitTop;
-    }
-
-    private int inputParam(String inputText, Integer num, Integer limitTop) {
-        printStream.print(inputText);
-        while (true) {
-            String input = scan.nextLine();
-            try {
-                if (input.isEmpty()) {
-                    return num;
-                }
-                int termNum = Integer.parseInt(input);
-                if (isValid(termNum, limitTop)) {
-                    return termNum;
-                }
-                printStream.println("не верный размер");
-            } catch (RuntimeException exception) {
-                printStream.println("Введено не число, попробуйте еще раз!");
-            }
-            printStream.print(inputText);
-        }
     }
 
     private String inputTypeTransformation(String textInput) {
@@ -147,28 +140,55 @@ public class InputSimpleParam implements Constance {
         }
     }
 
+    public int inputParam(String inputText, Integer num, Integer limitTop) {
+        printStream.print(inputText);
+        while (true) {
+            String input = scan.nextLine();
+            try {
+                if (input.isEmpty()) {
+                    return num;
+                }
+                int termNum = Integer.parseInt(input);
+                if (isValid(termNum, limitTop)) {
+                    return termNum;
+                }
+                printStream.println("не верный размер");
+            } catch (RuntimeException exception) {
+                printStream.println("Введено не число, попробуйте еще раз!");
+            }
+            printStream.print(inputText);
+        }
+    }
+
     public void input() {
         printStream.println("При нажатии Enter - конфигурации устанавливается дефолтное значение!");
+        inputSrv.height =
+            inputSrv.inputParam(String.format("[%d] Введите высоту картинки: ", count++), height, MAX_SIZE);
 
-        height = inputParam(String.format("[%d] Введите высоту картинки: ", count++), height, MAX_SIZE);
-        weight = inputParam(String.format("[%d] Введите ширину картинки: ", count++), weight, MAX_SIZE);
-        sampleCount =
-            inputParam(String.format("[%d] Введите количество выборок для рендеринга: ", count++), sampleCount,
-                MAX_CONFIG);
-        iterationCount =
-            inputParam(String.format("[%d] Введите количество итераций для выборки: ", count++), iterationCount,
-                MAX_CONFIG);
-        spaceCount = inputParam(String.format("[%d] Введите количество аффинных пространств: ", count++), spaceCount,
-            MAX_CONFIG);
-        initializationAffineSpace();
+        inputSrv.weight =
+            inputSrv.inputParam(String.format("[%d] Введите ширину картинки: ", count++), weight, MAX_SIZE);
 
-        symmetryCount = inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,
-            MAX_SYMMETRY_THREAD);
-        threadCount =
-            inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount, MAX_SYMMETRY_THREAD);
-        imageFormat = inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
+        inputSrv.sampleCount =
+            inputSrv.inputParam(String.format("[%d] Введите количество выборок для рендеринга: ", count++), sampleCount,
+                MAX_CONFIG);
+        inputSrv.iterationCount =
+            inputSrv.inputParam(String.format("[%d] Введите количество итераций для выборки: ", count++),
+                iterationCount, MAX_CONFIG);
+        inputSrv.spaceCount =
+            inputSrv.inputParam(String.format("[%d] Введите количество аффинных пространств: ", count++), spaceCount,
+                MAX_CONFIG);
+        inputSrv.initializationAffineSpace();
+
+        inputSrv.symmetryCount =
+            inputSrv.inputParam(String.format("[%d] Введите количество симметрий: ", count++), symmetryCount,
+                MAX_SYMMETRY_THREAD);
+        inputSrv.threadCount =
+            inputSrv.inputParam(String.format("[%d] Введите количество потоков: ", count++), threadCount,
+                MAX_SYMMETRY_THREAD);
+        inputSrv.imageFormat =
+            inputSrv.inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
-        typeTransformation = inputTypeTransformation("Введите вид трансформации: ");
+        inputSrv.typeTransformation = inputSrv.inputTypeTransformation("Введите вид трансформации: ");
         log.info("Закончен ввод данных");
     }
 
@@ -185,4 +205,5 @@ public class InputSimpleParam implements Constance {
         printStream.printf("[%d] Вид трансформации: %s%n", count++, typeTransformation);
         printStream.printf("[%d] Формат фото: %s%n", count++, imageFormat);
     }
+
 }

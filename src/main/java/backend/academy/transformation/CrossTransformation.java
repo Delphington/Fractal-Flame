@@ -1,6 +1,6 @@
 package backend.academy.transformation;
 
-import backend.academy.Point;
+import backend.academy.model.Point;
 
 public class CrossTransformation implements Transformation {
     @Override

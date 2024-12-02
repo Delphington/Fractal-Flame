@@ -1,9 +1,9 @@
 package backend.academy.render;
 
-import backend.academy.FractalImage;
-import backend.academy.Pixel;
-import backend.academy.Point;
-import backend.academy.Space;
+import backend.academy.model.FractalImage;
+import backend.academy.model.Pixel;
+import backend.academy.model.Point;
+import backend.academy.model.Space;
 import backend.academy.SrcRandom;
 import backend.academy.transformation.Transformation;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface Renderer {
+public interface Render {
 
     void rend(
         FractalImage fractalImage, List<Space> spaces, Transformation transformation,
@@ -64,11 +64,11 @@ public interface Renderer {
     }
 
     private void changePixel(Pixel pixel, Color color) {
-        if (pixel.hitCount() == 0) {
-            pixel.hitCount(1);
+        if (pixel.cnt() == 0) {
+            pixel.cnt(1);
             pixel.setColor(color.getRed(), color.getGreen(), color.getBlue());
         } else {
-            pixel.hitCount(pixel.hitCount() + 1);
+            pixel.cnt(pixel.cnt() + 1);
             pixel.setCorrect(color.getRed(), color.getGreen(), color.getBlue());
         }
     }

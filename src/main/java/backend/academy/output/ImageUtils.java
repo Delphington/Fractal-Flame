@@ -1,6 +1,6 @@
-package backend.academy.config;
+package backend.academy.output;
 
-import backend.academy.FractalImage;
+import backend.academy.model.FractalImage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;

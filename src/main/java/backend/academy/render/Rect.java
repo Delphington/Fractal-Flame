@@ -1,6 +1,6 @@
 package backend.academy.render;
 
-import backend.academy.Point;
+import backend.academy.model.Point;
 
 public record Rect(double x, double y, double width, double height) {
     public boolean contains(Point p) {

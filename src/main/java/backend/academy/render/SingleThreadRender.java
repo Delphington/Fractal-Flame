@@ -1,11 +1,11 @@
 package backend.academy.render;
 
-import backend.academy.FractalImage;
-import backend.academy.Space;
+import backend.academy.model.FractalImage;
+import backend.academy.model.Space;
 import backend.academy.transformation.Transformation;
 import java.util.List;
 
-public class SingleThreadRender implements Renderer {
+public class SingleThreadRender implements Render {
     public void rend(
         FractalImage fractalImage,
         List<Space> spaces,

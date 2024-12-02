@@ -1,6 +1,6 @@
 package backend.academy.transformation;
 
-import backend.academy.Point;
+import backend.academy.model.Point;
 
 @SuppressWarnings("MagicNumber")
 public class BubbleTransformation implements Transformation {

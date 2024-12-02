@@ -1,7 +1,7 @@
 package backend.academy.post;
 
-import backend.academy.FractalImage;
-import backend.academy.Pixel;
+import backend.academy.model.FractalImage;
+import backend.academy.model.Pixel;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -13,8 +13,8 @@ public class GammaCorrection {
         for (int y = 0; y < image.height(); y++) {
             for (int x = 0; x < image.width(); x++) {
                 Pixel pixel = image.pixel(x, y);
-                if (pixel.hitCount() != 0) {
-                    double norm = Math.log10(pixel.hitCount());
+                if (pixel.cnt() != 0) {
+                    double norm = Math.log10(pixel.cnt());
                     if (max < norm) {
                         max = norm;
                     }
@@ -25,13 +25,13 @@ public class GammaCorrection {
         for (int y = 0; y < image.height(); y++) {
             for (int x = 0; x < image.width(); x++) {
                 Pixel pixel = image.pixel(x, y);
-                if (pixel.hitCount() != 0) {
-                    double normal = Math.log10(pixel.hitCount()) / max;
+                if (pixel.cnt() != 0) {
+                    double normal = Math.log10(pixel.cnt()) / max;
                     image.data()[y][x] = new Pixel(
                         (int) (pixel.r() * Math.pow(normal, (1.0 / GAMMA))),
                         (int) (pixel.g() * Math.pow(normal, (1.0 / GAMMA))),
                         (int) (pixel.b() * Math.pow(normal, (1.0 / GAMMA))),
-                        pixel.hitCount()
+                        pixel.cnt()
                     );
                 }
             }
