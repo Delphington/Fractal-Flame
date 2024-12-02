@@ -1,9 +1,9 @@
 package backend.academy;
 
+import backend.academy.input.InputSimpleParam;
 import backend.academy.model.FractalImage;
 import backend.academy.model.Space;
 import backend.academy.output.ImageUtils;
-import backend.academy.input.InputSimpleParam;
 import backend.academy.post.GammaCorrection;
 import backend.academy.render.MultiThreadRender;
 import backend.academy.render.Rect;
@@ -103,18 +103,19 @@ public class StartProgram {
 
     }
 
-    private void printCompareThread(long resultTimeUser, long resultCompareTime, InputSimpleParam srvInput){
+    @SuppressWarnings("MultipleStringLiterals")
+    private void printCompareThread(long resultTimeUser, long resultCompareTime, InputSimpleParam srvInput) {
         printStream.println("=====================================");
         printStream.printf("Вы выбрали количество потоков: %d \n", srvInput.threadCount());
-        if(srvInput.threadCount() == 1){
+        if (srvInput.threadCount() == 1) {
             printStream.printf("Время работы однопоточного: %d \n", resultTimeUser);
-            printStream.printf("Время работы %d поточного: %d \n", DEFAULT_COUNT_THREAD,  resultCompareTime);
+            printStream.printf("Время работы %d поточного: %d \n", DEFAULT_COUNT_THREAD, resultCompareTime);
             printStream.printf("Разница однопоточки и многопоточки: %d \n", (resultCompareTime - resultTimeUser));
 
-        }else {
+        } else {
             printStream.printf("Время работы однопоточного: %d \n", resultCompareTime);
-            printStream.printf("Время работы %d поточного: %d \n",srvInput.threadCount(), resultTimeUser);
-            printStream.printf("Разница однопоточки и многопоточки: %d \n",  resultTimeUser -resultCompareTime);
+            printStream.printf("Время работы %d поточного: %d \n", srvInput.threadCount(), resultTimeUser);
+            printStream.printf("Разница однопоточки и многопоточки: %d \n", resultTimeUser - resultCompareTime);
         }
         printStream.println("Если число < 0  -> многопоточная версия работает быстрее");
     }

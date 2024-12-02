@@ -2,8 +2,6 @@ package backend.academy.model;
 
 import java.awt.Color;
 import java.util.Random;
-
-import backend.academy.model.Point;
 import lombok.Getter;
 
 public class Space {

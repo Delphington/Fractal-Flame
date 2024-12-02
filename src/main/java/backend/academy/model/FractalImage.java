@@ -16,7 +16,7 @@ public record FractalImage(Pixel[][] data, int width, int height) {
     }
 
     public Pixel pixel(int x, int y) {
-        if(x>=0 && x<=width &&  y>=0 && y<height) {
+        if (x >= 0 && x <= width && y >= 0 && y < height) {
             return data[y][x];
         }
         log.warn("Не корретный запрос пикселя в классе FractalImage.pixel");

@@ -1,10 +1,10 @@
 package backend.academy.render;
 
+import backend.academy.SrcRandom;
 import backend.academy.model.FractalImage;
 import backend.academy.model.Pixel;
 import backend.academy.model.Point;
 import backend.academy.model.Space;
-import backend.academy.SrcRandom;
 import backend.academy.transformation.Transformation;
 import java.awt.Color;
 import java.util.List;

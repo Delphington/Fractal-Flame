@@ -23,12 +23,11 @@ public final class ImageUtils {
         // Заполнение изображения данными из массива RGB
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                images.setRGB(x, y,  //todo: исключение по переполнению
+                images.setRGB(x, y,
                     new Color(image.pixel(x, y).r(), image.pixel(x, y).g(), image.pixel(x, y).b()).getRGB());
             }
         }
 
-        //todo: получше переписать и  добавить логгирование // Сохранение изображения в файл
         try {
             File outputFile = new File(filename + "." + format.format());
             ImageIO.write(images, format.format(), outputFile);
