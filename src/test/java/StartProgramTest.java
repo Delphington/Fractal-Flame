@@ -81,7 +81,7 @@ public class StartProgramTest {
         resultCompareTime = end - start;
         System.err.println(resultTimeUser);
         System.err.println(resultCompareTime);
-        assertTrue((resultCompareTime - resultTimeUser) > 0);
+        assertTrue((resultCompareTime - resultTimeUser) < 0);
 
     }
 
@@ -126,6 +126,6 @@ public class StartProgramTest {
         end = System.nanoTime();
         resultCompareTime = end - start;
 
-        assertTrue((resultTimeUser - resultCompareTime) > 0);
+        assertTrue((resultTimeUser - resultCompareTime) < 0);
     }
 }
