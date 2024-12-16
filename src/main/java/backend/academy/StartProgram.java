@@ -13,13 +13,12 @@ import backend.academy.transformation.Transformation;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.List;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
-//todo: Логирование
-//todo: вывод заполненных данных
-
 @Log4j2
+@Getter
 @UtilityClass
 public class StartProgram {
 
@@ -43,30 +42,29 @@ public class StartProgram {
     private Render render;
     private Render compareRender;
 
-    //Todo: сменить имя на console
-    public static void start() {
-
+    public static void input() {
         srvInput = new InputSimpleParam();
-
         InputSimpleParam.inputSrv(srvInput);
 
         srvInput.input();
         srvInput.printInputConfig();
 
         fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
-        transformation = srvInput.variousTransformation().get(srvInput.typeTransformation());
+        transformation = srvInput.typeTransformation();
         spaces = srvInput.spaces();
 
         if (srvInput.threadCount() == 1) {
             render = new SingleThreadRender();
             compareRender = new MultiThreadRender(DEFAULT_COUNT_THREAD);
-            log.info("однопоточная версия");
+            log.info("Однопоточная версия");
         } else {
             render = new MultiThreadRender(srvInput.threadCount());
             compareRender = new SingleThreadRender();
-            log.info("многопоточная версия");
+            log.info("Многопоточная версия");
         }
+    }
 
+    public static void run() {
         start = System.nanoTime();
         render.rend(
             fractalImage,
@@ -99,12 +97,10 @@ public class StartProgram {
         // Сохранение уменьшенного изображения в файл
         ImageUtils.save(fractalImage, Path.of("src/main/resources/Image/generate/img"), srvInput.imageFormat());
         printStream.println("Картинка успешно сохранена!");
-        printCompareThread(resultTimeUser, resultCompareTime, srvInput);
-
     }
 
     @SuppressWarnings("MultipleStringLiterals")
-    private void printCompareThread(long resultTimeUser, long resultCompareTime, InputSimpleParam srvInput) {
+    public void printCompareThread() {
         printStream.println("=====================================");
         printStream.printf("Вы выбрали количество потоков: %d \n", srvInput.threadCount());
         if (srvInput.threadCount() == 1) {

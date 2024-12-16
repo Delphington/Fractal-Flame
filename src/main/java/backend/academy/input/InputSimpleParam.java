@@ -16,60 +16,51 @@ import backend.academy.transformation.TangentTransformation;
 import backend.academy.transformation.Transformation;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+@Getter
 public class InputSimpleParam implements Constance {
     private final PrintStream printStream = System.out;
     private final Scanner scan = new Scanner(System.in);
     private int count = 1;
 
-    @Getter @Setter
+    @Setter
     private static InputSimpleParam inputSrv;
 
-    @Getter
-    private Map<String, Transformation> variousTransformation;
-    @Getter
     private List<Space> spaces;
-    @Getter
-    private String typeTransformation;
-    @Getter
+    private Transformation typeTransformation;
     private int height;
-    @Getter
     private int weight;
-    @Getter
     private int sampleCount;
-    @Getter
     private int iterationCount;
-    @Getter
     private int spaceCount;
-    @Getter
     private int symmetryCount;
-    @Getter @Setter
+    @Setter
     private int threadCount;
-    @Getter
     private ImageFormat imageFormat;
+
+    private List<Transformation> transformationList;
 
     public InputSimpleParam() {
         spaces = new ArrayList<>();
-        variousTransformation = new HashMap<>();
-        variousTransformation.put("diamond", new DiamondTransformation());
-        variousTransformation.put("disc", new DiscTransformation());
-        variousTransformation.put("handkerchief", new HandkerchiefTransformation());
-        variousTransformation.put("hyperbolic", new HyperbolicTransformation());
-        variousTransformation.put("polar", new PolarTransformation());
-        variousTransformation.put("sin", new SinTransformation());
-        variousTransformation.put("spherical", new SphericalTransformation());
-        variousTransformation.put("spiral", new SpiralTransformation());
-        variousTransformation.put("cross", new CrossTransformation());
-        variousTransformation.put("tangent", new TangentTransformation());
-        variousTransformation.put("bubble", new BubbleTransformation());
+        transformationList = new ArrayList<>();
+        transformationList.add(new HyperbolicTransformation());
+        transformationList.add(new DiscTransformation());
+        transformationList.add(new HandkerchiefTransformation());
+        transformationList.add(new DiamondTransformation());
+        transformationList.add(new PolarTransformation());
+        transformationList.add(new SinTransformation());
+        transformationList.add(new SphericalTransformation());
+        transformationList.add(new SpiralTransformation());
+        transformationList.add(new CrossTransformation());
+        transformationList.add(new TangentTransformation());
+        transformationList.add(new BubbleTransformation());
+        //--------------------------------------
 
         typeTransformation = DEFAULT_TYPE_TRANSFORMATION;
         height = DEFAULT_HEIGHT;
@@ -81,16 +72,6 @@ public class InputSimpleParam implements Constance {
         threadCount = DEFAULT_THREAD_COUNT;
         imageFormat = DEFAULT_IMAGE_FORMAT;
         initializationAffineSpace();
-
-    }
-
-    private void printTransformation() {
-        printStream.println("Виды трансформации: ");
-        int counterTransformation = 0;
-        for (Map.Entry<String, Transformation> item : variousTransformation.entrySet()) {
-            counterTransformation++;
-            printStream.println("[" + counterTransformation + "] " + item.getKey());
-        }
     }
 
     private void initializationAffineSpace() {
@@ -102,25 +83,6 @@ public class InputSimpleParam implements Constance {
 
     private boolean isValid(Integer x, Integer limitTop) {
         return (x > 0) && x < limitTop;
-    }
-
-    private String inputTypeTransformation(String textInput) {
-        printTransformation();
-        printStream.print(textInput);
-
-        while (true) {
-            String input = scan.nextLine();
-            if (input.isEmpty()) {
-                return typeTransformation;
-            }
-            String termInput = input.trim().toLowerCase();
-            if (variousTransformation.get(termInput.toLowerCase()) != null) {
-                return termInput;
-            } else {
-                printStream.println("Ввод не корректный! Попробуйте еще раз!");
-                printStream.print(textInput);
-            }
-        }
     }
 
     private ImageFormat inputTypeImage(String text) {
@@ -188,7 +150,11 @@ public class InputSimpleParam implements Constance {
         inputSrv.imageFormat =
             inputSrv.inputTypeImage(String.format("[%d] Введите тип вывода картинки - {jpeg, bmp, png}: ", count++));
         printStream.println("----------------------------------");
-        inputSrv.typeTransformation = inputSrv.inputTypeTransformation("Введите вид трансформации: ");
+
+        printTransformation();
+        inputSrv.typeTransformation =
+            transformationList.get(inputParam("Введите число: ", 1, transformationList.size() + 1) - 1);
+
         log.info("Закончен ввод данных");
     }
 
@@ -202,8 +168,14 @@ public class InputSimpleParam implements Constance {
         printStream.printf("[%d] Количество аффинных пространств: %d%n", count++, spaceCount);
         printStream.printf("[%d] Количество симметрий: %d%n", count++, symmetryCount);
         printStream.printf("[%d] Количество потоков: %d%n", count++, threadCount);
-        printStream.printf("[%d] Вид трансформации: %s%n", count++, typeTransformation);
+        printStream.printf("[%d] Вид трансформации: %s%n", count++, typeTransformation.getClass().getSimpleName());
         printStream.printf("[%d] Формат фото: %s%n", count++, imageFormat);
     }
 
+    private void printTransformation() {
+        printStream.println("Виды трансформации: ");
+        for (int i = 0; i < transformationList.size(); i++) {
+            printStream.println("[" + (i + 1) + "] " + transformationList.get(i).getClass().getSimpleName());
+        }
+    }
 }

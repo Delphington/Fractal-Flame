@@ -7,12 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
+import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+@UtilityClass
 public final class ImageUtils {
-    private ImageUtils() {
-    }
 
     public static void save(FractalImage image, Path filename, ImageFormat format) {
         int width = image.width();

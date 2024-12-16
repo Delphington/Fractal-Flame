@@ -49,7 +49,7 @@ public class StartProgramTest {
         srvInput.threadCount(1);
 
         fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
-        transformation = srvInput.variousTransformation().get(srvInput.typeTransformation());
+        transformation = srvInput.typeTransformation();
         spaces = srvInput.spaces();
 
         render = new SingleThreadRender();
@@ -75,7 +75,7 @@ public class StartProgramTest {
         srvInput.threadCount(2);
 
         fractalImage = FractalImage.create(srvInput.weight(), srvInput.height());
-        transformation = srvInput.variousTransformation().get(srvInput.typeTransformation());
+        transformation = srvInput.typeTransformation();
         spaces = srvInput.spaces();
         compareRender = new MultiThreadRender(DEFAULT_COUNT_THREAD);
 
