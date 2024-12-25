@@ -27,8 +27,6 @@
         [11] BubbleTransformation
 
 ## Ососбенности
-Основные характеристики:
-
     Симметричный рендеринг
     11 разнообразных нелинейных трансформаций
     Нормализация изображения (гамма-коррекция)
@@ -45,7 +43,7 @@ SpiralFlame
 Spherical
 ![spherical](https://github.com/user-attachments/assets/cbecc029-dde4-49b2-bf56-170924b2c90f)
 
-#SinFlame
+SinFlame
 ![sinFlame](https://github.com/user-attachments/assets/3980fd3d-ab02-4a41-b8f1-d81e833a51c6)
 
 PolarFlame
